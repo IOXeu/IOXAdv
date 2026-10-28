@@ -1,0 +1,15 @@
+/* IOXAdv — estilos da página inicial. Sem dependências externas. */
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#050d25;color:#f7f8fc;font-family:system-ui,-apple-system,sans-serif;display:grid;place-items:center;padding:24px}
+main{width:100%;max-width:740px;border:1px solid #ffffff26;border-radius:20px;padding:clamp(24px,6vw,48px);background:#ffffff05}
+small{color:#e9bb65;letter-spacing:.1em;text-transform:uppercase}
+h1{font-size:clamp(36px,9vw,64px);margin:16px 0}
+h2{font-size:20px;margin-top:30px}
+p,li{line-height:1.65;color:#d2d8e4}
+ul{padding-left:22px}
+.aviso{padding:16px;border-left:4px solid #d18b00;background:#ffffff08;margin-top:28px}
+footer{font-size:13px;color:#adb8ca;margin-top:28px}
+a{color:#e9bb65;overflow-wrap:anywhere}
+:focus-visible{outline:3px solid #e9bb65;outline-offset:4px}
+@media(max-width:420px){body{padding:12px}main{border-radius:14px}}
+@media print{body{display:block;background:white;color:black;padding:0}main{max-width:none;border:0;background:white}p,li,footer,small{color:black}.aviso{background:white}}
