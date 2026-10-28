@@ -1,14 +1,119 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050d25"><title>IOXAdv — Editor experimental</title><style>
-*{box-sizing:border-box}body{margin:0;background:#050d25;color:#f7f8fc;font:18px system-ui,-apple-system,sans-serif;line-height:1.6}main{max-width:900px;margin:auto;padding:clamp(18px,5vw,40px)}h1{font-size:clamp(32px,7vw,48px)}h2{font-size:26px}.aviso{border-left:5px solid #e9bb65;background:#ffffff0b;padding:18px}label{display:block;font-weight:700;margin-top:24px}textarea{width:100%;min-height:360px;display:block;padding:16px;margin:12px 0;font:20px/1.6 system-ui;background:white;color:#101b32;border:2px solid #adb8ca;border-radius:10px;resize:vertical}.acoes{display:flex;flex-wrap:wrap;gap:12px}button{min-height:52px;padding:12px 20px;border:2px solid #e9bb65;border-radius:8px;background:#182d50;color:white;font:18px system-ui;cursor:pointer}:focus-visible{outline:4px solid #fbd774;outline-offset:4px}#estado{min-height:60px;color:#ffdb91}footer{margin-top:36px;font-size:16px;color:#d2d8e4}.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}a{color:#ffdb91}
-</style></head><body><main><h1>IOXAdv</h1><p>Editor experimental · primeira etapa do aplicativo</p><div class="aviso">Use somente dados fictícios. Esta versão não possui IA, Vox, cofre ou criptografia. O texto fica em memória e pode ser perdido ao fechar a página.</div><noscript><p>Ative o JavaScript para usar os botões do editor.</p></noscript><section aria-labelledby="tituloEditor"><h2 id="tituloEditor">Editor de rascunhos</h2><label for="texto">Seu rascunho</label><textarea id="texto" lang="pt-BR" spellcheck="true" placeholder="Digite seu texto de teste aqui…"></textarea><p id="contador">0 palavras · 0 caracteres</p><div class="acoes"><button id="baixar" type="button">Baixar TXT</button><button id="abrir" type="button">Abrir TXT</button><button id="limpar" type="button">Limpar</button></div><input id="arquivo" type="file" accept=".txt,text/plain" hidden><p id="estado" role="status" aria-live="polite"></p></section><footer>Sem dependências externas ou chamadas de rede no código desta página. A hospedagem pode manter registros técnicos de acesso. As exportações TXT não são cifradas.</footer></main><script>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IOXAdv — Editor experimental</title><style>
+*{box-sizing:border-box}body{margin:0;background:#050d25;color:#f7f8fc;font:18px system-ui,-apple-system,sans-serif;line-height:1.6}main{max-width:900px;margin:auto;padding:clamp(18px,5vw,40px)}h1{font-size:clamp(32px,7vw,48px);margin-bottom:6px}h2{font-size:26px;margin-top:34px}.aviso{border-left:5px solid #e9bb65;background:#ffffff0b;padding:18px;margin:18px 0}label{display:block;font-weight:700;margin-top:20px}input[type=text],textarea{width:100%;display:block;padding:14px;margin:10px 0;font:18px/1.6 system-ui;background:#fff;color:#101b32;border:2px solid #adb8ca;border-radius:10px}textarea{min-height:300px;resize:vertical}.acoes{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0}button{min-height:54px;padding:14px 20px;border:2px solid #e9bb65;border-radius:8px;background:#182d50;color:#fff;font:18px system-ui;cursor:pointer}button:hover{background:#23406e}:focus-visible{outline:4px solid #fbd774;outline-offset:4px}button.perigo{border-color:#ff9c9c;background:#4a1622}button.perigo:hover{background:#64202f}#estado{min-height:64px;color:#ffdb91;font-weight:600}ul{list-style:none;padding:0}li{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px;margin:10px 0;background:#ffffff0d;border:1px solid #ffffff26;border-radius:10px}li strong{display:block;font-size:19px}li small{display:block;color:#c7d0de}li button{min-height:46px;padding:10px 16px;font-size:16px}.vazio{color:#c7d0de;font-style:italic}footer{margin-top:40px;font-size:16px;color:#d2d8e4;border-top:1px solid #ffffff26;padding-top:18px}
+</style></head><body><main>
+<h1>IOXAdv</h1>
+<p>Editor experimental · etapa 2: rascunhos guardados no aparelho</p>
+<div class="aviso">Use somente dados fictícios. Esta versão <strong>não possui IA, Vox nem criptografia</strong>. Os rascunhos ficam salvos apenas neste navegador, sem senha; qualquer pessoa com acesso ao aparelho pode abri-los.</div>
+<noscript><p>Ative o JavaScript para usar o editor.</p></noscript>
+
+<section aria-labelledby="t1">
+<h2 id="t1">1. Rascunho</h2>
+<label for="titulo">Nome do rascunho</label>
+<input id="titulo" type="text" maxlength="80" placeholder="Ex.: Petição de teste">
+<label for="texto">Texto</label>
+<textarea id="texto" lang="pt-BR" spellcheck="true" placeholder="Digite o texto de teste aqui…"></textarea>
+<p id="contador">0 palavras · 0 caracteres</p>
+<div class="acoes">
+<button id="salvar" type="button">Salvar rascunho</button>
+<button id="novo" type="button">Novo rascunho</button>
+<button id="baixar" type="button">Baixar TXT</button>
+<button id="abrir" type="button">Abrir TXT</button>
+</div>
+<input id="arquivo" type="file" accept=".txt,text/plain" hidden>
+<p id="estado" role="status" aria-live="polite">Escreva e clique em Salvar rascunho.</p>
+</section>
+
+<section aria-labelledby="t2">
+<h2 id="t2">2. Rascunhos salvos neste navegador</h2>
+<p id="listaVazia" class="vazio">Nenhum rascunho salvo ainda.</p>
+<ul id="lista" aria-live="polite"></ul>
+</section>
+
+<footer>Os rascunhos são guardados no armazenamento local do navegador (não em nuvem) e podem desaparecer se você limpar os dados do site. Exportações TXT não são cifradas. Esta página não envia texto pela rede.</footer>
+</main>
+<script>
 'use strict';
-const area=document.getElementById('texto'),estado=document.getElementById('estado'),file=document.getElementById('arquivo');
-let alterado=false;
-function atualizar(){const t=area.value.trim();document.getElementById('contador').textContent=(t?t.split(/\s+/u).length:0)+' palavras · '+area.value.length+' caracteres';}
-area.addEventListener('input',()=>{alterado=true;atualizar()});
-document.getElementById('baixar').onclick=()=>{if(!area.value.trim()){estado.textContent='Digite um texto antes de baixar.';return}const url=URL.createObjectURL(new Blob([area.value],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='ioxadv-rascunho.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);estado.textContent='Download solicitado. Confira se o arquivo foi salvo antes de fechar. O TXT não tem criptografia.'};
-document.getElementById('abrir').onclick=()=>file.click();
-file.onchange=async()=>{const f=file.files[0];if(!f)return;try{if(f.size>1048576)throw Error('O limite é de 1 MB.');const t=await f.text();if(area.value&&!confirm('Substituir o texto atual?'))return;area.value=t;alterado=true;atualizar();estado.textContent='Texto aberto localmente. Nenhum arquivo foi enviado ao servidor.'}catch(e){estado.textContent=e.message}finally{file.value=''}};
-document.getElementById('limpar').onclick=()=>{if(area.value&&!confirm('Limpar o texto?'))return;area.value='';alterado=false;atualizar();estado.textContent='Editor limpo. Os arquivos baixados continuam no aparelho.'};
-window.addEventListener('beforeunload',e=>{if(alterado&&area.value){e.preventDefault();e.returnValue=''}});
+const CHAVE='ioxadv.rascunhos.v2';
+const $=id=>document.getElementById(id);
+const titulo=$('titulo'),area=$('texto'),estado=$('estado'),lista=$('lista'),vazio=$('listaVazia'),file=$('arquivo');
+let idAtual=null,alterado=false;
+
+function ler(){try{const d=JSON.parse(localStorage.getItem(CHAVE));return Array.isArray(d)?d:[]}catch(e){return[]}}
+function gravar(d){try{localStorage.setItem(CHAVE,JSON.stringify(d));return true}catch(e){estado.textContent='Não foi possível salvar: o armazenamento está cheio ou bloqueado.';return false}}
+function contador(){const t=area.value.trim();$('contador').textContent=(t?t.split(/\s+/u).length:0)+' palavras · '+area.value.length+' caracteres'}
+function aviso(t){estado.textContent=t}
+function sujo(){alterado=true}
+
+function render(){
+ const d=ler().sort((a,b)=>b.atualizado-a.atualizado);
+ lista.textContent='';
+ vazio.style.display=d.length?'none':'block';
+ d.forEach(r=>{
+  const li=document.createElement('li');
+  const box=document.createElement('div');
+  const s=document.createElement('strong');s.textContent=r.titulo||'(sem nome)';
+  const info=document.createElement('small');
+  const data=new Date(r.atualizado).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
+  info.textContent=data+' · '+r.texto.length+' caracteres';
+  box.append(s,info);
+  const acoes=document.createElement('div');acoes.className='acoes';
+  const abrirBtn=document.createElement('button');abrirBtn.type='button';abrirBtn.textContent='Abrir';abrirBtn.onclick=()=>carregar(r.id);
+  const del=document.createElement('button');del.type='button';del.className='perigo';del.textContent='Apagar';del.onclick=()=>apagar(r.id,r.titulo);
+  acoes.append(abrirBtn,del);li.append(box,acoes);lista.append(li);
+ });
+}
+function carregar(id){
+ const r=ler().find(x=>x.id===id);if(!r)return;
+ if(alterado&&area.value.trim()&&!confirm('Descartar o texto atual e abrir outro rascunho?'))return;
+ idAtual=r.id;titulo.value=r.titulo;area.value=r.texto;alterado=false;contador();
+ aviso('Rascunho aberto: '+(r.titulo||'(sem nome)'));
+}
+function apagar(id,nome){
+ if(!confirm('Apagar o rascunho "'+(nome||'(sem nome)')+'"? Isso não pode ser desfeito, e o TXT já baixado não é afetado.'))return;
+ gravar(ler().filter(x=>x.id!==id));
+ if(id===idAtual){idAtual=null;}
+ render();aviso('Rascunho apagado.');
+}
+$('salvar').onclick=()=>{
+ if(!area.value.trim()){aviso('Digite um texto antes de salvar.');return}
+ const d=ler();const agora=Date.now();
+ const nome=titulo.value.trim()||('Rascunho '+new Date(agora).toLocaleDateString('pt-BR'));
+ if(idAtual){
+  const r=d.find(x=>x.id===idAtual);
+  if(r){r.titulo=nome;r.texto=area.value;r.atualizado=agora}
+  else{d.push({id:crypto.randomUUID(),titulo:nome,texto:area.value,atualizado:agora})}
+ } else {
+  idAtual=crypto.randomUUID();
+  d.push({id:idAtual,titulo:nome,texto:area.value,atualizado:agora});
+ }
+ if(gravar(d)){alterado=false;titulo.value=nome;render();aviso('Rascunho salvo neste navegador. Lembre-se: sem criptografia.')}
+};
+$('novo').onclick=()=>{
+ if(alterado&&area.value.trim()&&!confirm('Descartar o texto não salvo e começar outro?'))return;
+ idAtual=null;titulo.value='';area.value='';alterado=false;contador();aviso('Novo rascunho em branco.');
+};
+$('baixar').onclick=()=>{
+ if(!area.value.trim()){aviso('Digite um texto antes de baixar.');return}
+ const url=URL.createObjectURL(new Blob([area.value],{type:'text/plain;charset=utf-8'}));
+ const a=document.createElement('a');
+ a.href=url;a.download=(titulo.value.trim()||'ioxadv-rascunho').replace(/[\\/:*?"<>|]/g,'-')+'.txt';
+ document.body.append(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+ aviso('Download solicitado. Confira se o arquivo foi salvo antes de fechar.');
+};
+$('abrir').onclick=()=>file.click();
+file.onchange=async()=>{
+ const f=file.files[0];if(!f)return;
+ try{
+  if(f.size>1048576)throw Error('O limite é de 1 MB.');
+  const t=await f.text();
+  if(area.value.trim()&&!confirm('Substituir o texto atual pelo conteúdo do arquivo?'))return;
+  area.value=t;alterado=true;contador();
+  aviso('Arquivo aberto localmente. Nada foi enviado pela rede. Clique em Salvar rascunho para guardar.');
+ }catch(e){aviso(e.message)}finally{file.value=''}
+};
+area.addEventListener('input',()=>{sujo();contador()});
+titulo.addEventListener('input',sujo);
+window.addEventListener('beforeunload',e=>{if(alterado&&area.value.trim()){e.preventDefault();e.returnValue=''}});
+contador();render();
 </script></body></html>
