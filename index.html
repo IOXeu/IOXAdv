@@ -1,9 +1,9 @@
 <!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IOXAdv — Editor experimental</title><style>
-*{box-sizing:border-box}body{margin:0;background:#050d25;color:#f7f8fc;font:18px system-ui,-apple-system,sans-serif;line-height:1.6}main{max-width:900px;margin:auto;padding:clamp(18px,5vw,40px)}h1{font-size:clamp(32px,7vw,48px);margin-bottom:6px}h2{font-size:26px;margin-top:34px}.aviso{border-left:5px solid #e9bb65;background:#ffffff0b;padding:18px;margin:18px 0}label{display:block;font-weight:700;margin-top:20px}input[type=text],textarea{width:100%;display:block;padding:14px;margin:10px 0;font:18px/1.6 system-ui;background:#fff;color:#101b32;border:2px solid #adb8ca;border-radius:10px}textarea{min-height:300px;resize:vertical}.acoes{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0}button{min-height:54px;padding:14px 20px;border:2px solid #e9bb65;border-radius:8px;background:#182d50;color:#fff;font:18px system-ui;cursor:pointer}button:hover{background:#23406e}:focus-visible{outline:4px solid #fbd774;outline-offset:4px}button.perigo{border-color:#ff9c9c;background:#4a1622}button.perigo:hover{background:#64202f}#estado{min-height:64px;color:#ffdb91;font-weight:600}ul{list-style:none;padding:0}li{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px;margin:10px 0;background:#ffffff0d;border:1px solid #ffffff26;border-radius:10px}li strong{display:block;font-size:19px}li small{display:block;color:#c7d0de}li button{min-height:46px;padding:10px 16px;font-size:16px}.vazio{color:#c7d0de;font-style:italic}footer{margin-top:40px;font-size:16px;color:#d2d8e4;border-top:1px solid #ffffff26;padding-top:18px}
+*{box-sizing:border-box}body{margin:0;background:#050d25;color:#f7f8fc;font:18px system-ui,-apple-system,sans-serif;line-height:1.6}main{max-width:900px;margin:auto;padding:clamp(18px,5vw,40px)}h1{font-size:clamp(32px,7vw,48px);margin-bottom:6px}h2{font-size:26px;margin-top:34px}.aviso{border-left:5px solid #e9bb65;background:#ffffff0b;padding:18px;margin:18px 0}label{display:block;font-weight:700;margin-top:20px}input[type=text],textarea,select{width:100%;display:block;padding:14px;margin:10px 0;font:18px/1.6 system-ui;background:#fff;color:#101b32;border:2px solid #adb8ca;border-radius:10px}textarea{min-height:300px;resize:vertical}select{max-width:220px;width:auto;min-height:54px;margin:0}.acoes{display:flex;flex-wrap:wrap;gap:12px;margin:8px 0;align-items:center}button{min-height:54px;padding:14px 20px;border:2px solid #e9bb65;border-radius:8px;background:#182d50;color:#fff;font:18px system-ui;cursor:pointer}button:hover{background:#23406e}:focus-visible{outline:4px solid #fbd774;outline-offset:4px}button:disabled{cursor:not-allowed;opacity:.5}button.perigo{border-color:#ff9c9c;background:#4a1622}button.perigo:hover{background:#64202f}#estado,.saida{min-height:64px;color:#ffdb91;font-weight:600}ul{list-style:none;padding:0}li{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px;margin:10px 0;background:#ffffff0d;border:1px solid #ffffff26;border-radius:10px}li strong{display:block;font-size:19px}li small{display:block;color:#c7d0de;font-weight:400}li button{min-height:46px;padding:10px 16px;font-size:16px}.vazio{color:#c7d0de;font-style:italic}.voz{background:#ffffff0b;border:1px solid #ffffff26;border-radius:12px;padding:18px}.rotulo{font-weight:700;margin:16px 0 6px}.selo{display:inline-block;font-size:15px;padding:4px 10px;border-radius:999px;background:#e9bb65;color:#101b32;font-weight:700}footer{margin-top:40px;font-size:16px;color:#d2d8e4;border-top:1px solid #ffffff26;padding-top:18px}
 </style></head><body><main>
 <h1>IOXAdv</h1>
-<p>Editor experimental · etapa 2: rascunhos guardados no aparelho</p>
-<div class="aviso">Use somente dados fictícios. Esta versão <strong>não possui IA, Vox nem criptografia</strong>. Os rascunhos ficam salvos apenas neste navegador, sem senha; qualquer pessoa com acesso ao aparelho pode abri-los.</div>
+<p>Editor experimental · etapa 3: rascunhos salvos e voz (Vox)</p>
+<div class="aviso">Use somente dados fictícios. Esta versão <strong>não tem IA, não tem cofre com senha e não cifra os rascunhos</strong>. Os rascunhos ficam neste navegador, legíveis por quem usar o aparelho.</div>
 <noscript><p>Ative o JavaScript para usar o editor.</p></noscript>
 
 <section aria-labelledby="t1">
@@ -29,13 +29,37 @@
 <ul id="lista" aria-live="polite"></ul>
 </section>
 
-<footer>Os rascunhos são guardados no armazenamento local do navegador (não em nuvem) e podem desaparecer se você limpar os dados do site. Exportações TXT não são cifradas. Esta página não envia texto pela rede.</footer>
+<section aria-labelledby="t3">
+<h2 id="t3">3. Vox — voz</h2>
+<div class="voz">
+<p class="rotulo" style="margin-top:0">Ouvir o texto que está na tela</p>
+<div class="acoes">
+<button id="ler" type="button">Ler em voz alta</button>
+<button id="parar" type="button">Parar leitura</button>
+<label for="velocidade" style="margin:0">Velocidade</label>
+<select id="velocidade" aria-label="Velocidade da leitura">
+<option value="0.8">Lenta</option>
+<option value="1" selected>Normal</option>
+<option value="1.3">Rápida</option>
+</select>
+</div>
+<p class="rotulo">Ditar por voz para o editor</p>
+<p id="suporteVoz"><span class="selo">Verificando…</span></p>
+<div class="acoes">
+<button id="ditar" type="button">Começar ditado</button>
+<button id="pararDitado" type="button">Parar ditado</button>
+</div>
+<p id="estadoVoz" class="saida" role="status" aria-live="polite">—</p>
+</div>
+</section>
+
+<footer>A leitura em voz alta acontece no seu aparelho. O ditado depende do serviço de reconhecimento de fala do navegador e pode enviar o áudio para fora do aparelho — por isso, não fale dados reais. Rascunhos e TXT não são cifrados. Esta página não envia texto pela rede por conta própria.</footer>
 </main>
 <script>
 'use strict';
 const CHAVE='ioxadv.rascunhos.v2';
 const $=id=>document.getElementById(id);
-const titulo=$('titulo'),area=$('texto'),estado=$('estado'),lista=$('lista'),vazio=$('listaVazia'),file=$('arquivo');
+const titulo=$('titulo'),area=$('texto'),estado=$('estado'),lista=$('lista'),vazio=$('listaVazia'),file=$('arquivo'),estadoVoz=$('estadoVoz');
 let idAtual=null,alterado=false;
 
 function ler(){try{const d=JSON.parse(localStorage.getItem(CHAVE));return Array.isArray(d)?d:[]}catch(e){return[]}}
@@ -69,9 +93,9 @@ function carregar(id){
  aviso('Rascunho aberto: '+(r.titulo||'(sem nome)'));
 }
 function apagar(id,nome){
- if(!confirm('Apagar o rascunho "'+(nome||'(sem nome)')+'"? Isso não pode ser desfeito, e o TXT já baixado não é afetado.'))return;
+ if(!confirm('Apagar o rascunho "'+(nome||'(sem nome)')+'"? Isso não pode ser desfeito.'))return;
  gravar(ler().filter(x=>x.id!==id));
- if(id===idAtual){idAtual=null;}
+ if(id===idAtual)idAtual=null;
  render();aviso('Rascunho apagado.');
 }
 $('salvar').onclick=()=>{
@@ -86,7 +110,7 @@ $('salvar').onclick=()=>{
   idAtual=crypto.randomUUID();
   d.push({id:idAtual,titulo:nome,texto:area.value,atualizado:agora});
  }
- if(gravar(d)){alterado=false;titulo.value=nome;render();aviso('Rascunho salvo neste navegador. Lembre-se: sem criptografia.')}
+ if(gravar(d)){alterado=false;titulo.value=nome;render();aviso('Rascunho salvo neste navegador. Sem criptografia: use só dados fictícios.')}
 };
 $('novo').onclick=()=>{
  if(alterado&&area.value.trim()&&!confirm('Descartar o texto não salvo e começar outro?'))return;
@@ -109,11 +133,54 @@ file.onchange=async()=>{
   const t=await f.text();
   if(area.value.trim()&&!confirm('Substituir o texto atual pelo conteúdo do arquivo?'))return;
   area.value=t;alterado=true;contador();
-  aviso('Arquivo aberto localmente. Nada foi enviado pela rede. Clique em Salvar rascunho para guardar.');
+  aviso('Arquivo aberto localmente. Clique em Salvar rascunho para guardar.');
  }catch(e){aviso(e.message)}finally{file.value=''}
 };
 area.addEventListener('input',()=>{sujo();contador()});
 titulo.addEventListener('input',sujo);
+
+const synth=window.speechSynthesis;
+$('ler').onclick=()=>{
+ if(!area.value.trim()){estadoVoz.textContent='Não há texto na tela para ler.';return}
+ if(!synth){estadoVoz.textContent='Este navegador não oferece leitura em voz alta.';return}
+ synth.cancel();
+ const u=new SpeechSynthesisUtterance(area.value);
+ u.lang='pt-BR';u.rate=parseFloat($('velocidade').value);
+ u.onend=()=>{estadoVoz.textContent='Leitura concluída.'};
+ u.onerror=e=>{estadoVoz.textContent='A leitura falhou ('+e.error+'). Verifique o áudio do aparelho ou tente outro navegador.'};
+ synth.speak(u);
+ estadoVoz.textContent='Lendo em voz alta… Clique em Parar leitura para interromper.';
+};
+$('parar').onclick=()=>{if(synth){synth.cancel();estadoVoz.textContent='Leitura interrompida.'}};
+const Recon=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null,ditando=false;
+if(!Recon){
+ $('suporteVoz').innerHTML='<span class="selo" style="background:#ff9c9c">Ditado indisponível neste navegador</span>';
+ $('ditar').disabled=true;$('pararDitado').disabled=true;
+}else{
+ $('suporteVoz').innerHTML='<span class="selo" style="background:#9fe0b0">Ditado disponível</span> O áudio é processado por um serviço externo do navegador.';
+}
+$('ditar').onclick=()=>{
+ if(!Recon)return;
+ if(ditando){estadoVoz.textContent='O ditado já está ativo.';return}
+ rec=new Recon();rec.lang='pt-BR';rec.continuous=true;rec.interimResults=true;
+ let base=area.value?area.value+' ':'';
+ rec.onstart=()=>{ditando=true;estadoVoz.textContent='Ditando… fale perto do microfone.'};
+ rec.onresult=e=>{
+  let final='',parcial='';
+  for(let i=e.resultIndex;i<e.results.length;i++){
+   const t=e.results[i][0].transcript;
+   if(e.results[i].isFinal)final+=t+' ';else parcial+=t;
+  }
+  if(final){base+=final;area.value=base;sujo();contador()}
+  estadoVoz.textContent=parcial?('Ouvindo: '+parcial):'Ditando…';
+ };
+ rec.onerror=e=>{estadoVoz.textContent='Ditado interrompido: '+e.error+'. Se for permissão, libere o microfone no navegador.'};
+ rec.onend=()=>{ditando=false;estadoVoz.textContent='Ditado encerrado. Revise o texto e clique em Salvar rascunho.'};
+ try{rec.start()}catch(e){estadoVoz.textContent='Não foi possível iniciar o ditado.'}
+};
+$('pararDitado').onclick=()=>{if(rec&&ditando)rec.stop()};
+
 window.addEventListener('beforeunload',e=>{if(alterado&&area.value.trim()){e.preventDefault();e.returnValue=''}});
 contador();render();
 </script></body></html>
