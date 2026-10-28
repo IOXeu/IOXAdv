@@ -1,28 +1,14 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#050d25">
-<meta name="description" content="IOXAdv — projeto de assistente para advogados em desenvolvimento.">
-<title>IOXAdv — Em desenvolvimento</title>
-<style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#050d25;color:#f7f8fc;font-family:system-ui,-apple-system,sans-serif;display:grid;place-items:center;padding:24px}main{width:100%;max-width:740px;border:1px solid #ffffff26;border-radius:20px;padding:clamp(24px,6vw,48px);background:#ffffff05}small{color:#e9bb65;letter-spacing:.1em;text-transform:uppercase}h1{font-size:clamp(36px,9vw,64px);margin:16px 0}h2{font-size:20px;margin-top:30px}p,li{line-height:1.65;color:#d2d8e4}ul{padding-left:22px}.aviso{padding:16px;border-left:4px solid #d18b00;background:#ffffff08;margin-top:28px}footer{font-size:13px;color:#adb8ca;margin-top:28px}
-</style>
-</head>
-<body>
-<main>
-<small>Projeto em desenvolvimento · versão inicial</small>
-<h1>IOXAdv</h1>
-<p>Um assistente de trabalho para advogados. Estamos construindo o produto por etapas, com funções e limites identificados de forma transparente.</p>
-<h2>Escopo planejado</h2>
-<ul>
-<li>Vox: ditado, revisão e apoio à elaboração de documentos.</li>
-<li>Gavetas: organização do acervo pessoal do advogado.</li>
-<li>Gestão de receitas, despesas e rotinas do escritório.</li>
-</ul>
-<div class="aviso"><strong>Esta página ainda não é o aplicativo.</strong><p>Não há login, captura de áudio ou vídeo, cofre, IA ou calculadoras disponíveis nesta versão. Não envie documentos nem dados de clientes.</p></div>
-<footer>Esta versão não contém formulários, scripts, analytics ou integração com armazenamento. A hospedagem pode manter registros técnicos de acesso.</footer>
-</main>
-</body>
-</html>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050d25"><title>IOXAdv — Editor experimental</title><style>
+*{box-sizing:border-box}body{margin:0;background:#050d25;color:#f7f8fc;font:18px system-ui,-apple-system,sans-serif;line-height:1.6}main{max-width:900px;margin:auto;padding:clamp(18px,5vw,40px)}h1{font-size:clamp(32px,7vw,48px)}h2{font-size:26px}.aviso{border-left:5px solid #e9bb65;background:#ffffff0b;padding:18px}label{display:block;font-weight:700;margin-top:24px}textarea{width:100%;min-height:360px;display:block;padding:16px;margin:12px 0;font:20px/1.6 system-ui;background:white;color:#101b32;border:2px solid #adb8ca;border-radius:10px;resize:vertical}.acoes{display:flex;flex-wrap:wrap;gap:12px}button{min-height:52px;padding:12px 20px;border:2px solid #e9bb65;border-radius:8px;background:#182d50;color:white;font:18px system-ui;cursor:pointer}:focus-visible{outline:4px solid #fbd774;outline-offset:4px}#estado{min-height:60px;color:#ffdb91}footer{margin-top:36px;font-size:16px;color:#d2d8e4}.oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}a{color:#ffdb91}
+</style></head><body><main><h1>IOXAdv</h1><p>Editor experimental · primeira etapa do aplicativo</p><div class="aviso">Use somente dados fictícios. Esta versão não possui IA, Vox, cofre ou criptografia. O texto fica em memória e pode ser perdido ao fechar a página.</div><noscript><p>Ative o JavaScript para usar os botões do editor.</p></noscript><section aria-labelledby="tituloEditor"><h2 id="tituloEditor">Editor de rascunhos</h2><label for="texto">Seu rascunho</label><textarea id="texto" lang="pt-BR" spellcheck="true" placeholder="Digite seu texto de teste aqui…"></textarea><p id="contador">0 palavras · 0 caracteres</p><div class="acoes"><button id="baixar" type="button">Baixar TXT</button><button id="abrir" type="button">Abrir TXT</button><button id="limpar" type="button">Limpar</button></div><input id="arquivo" type="file" accept=".txt,text/plain" hidden><p id="estado" role="status" aria-live="polite"></p></section><footer>Sem dependências externas ou chamadas de rede no código desta página. A hospedagem pode manter registros técnicos de acesso. As exportações TXT não são cifradas.</footer></main><script>
+'use strict';
+const area=document.getElementById('texto'),estado=document.getElementById('estado'),file=document.getElementById('arquivo');
+let alterado=false;
+function atualizar(){const t=area.value.trim();document.getElementById('contador').textContent=(t?t.split(/\s+/u).length:0)+' palavras · '+area.value.length+' caracteres';}
+area.addEventListener('input',()=>{alterado=true;atualizar()});
+document.getElementById('baixar').onclick=()=>{if(!area.value.trim()){estado.textContent='Digite um texto antes de baixar.';return}const url=URL.createObjectURL(new Blob([area.value],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='ioxadv-rascunho.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);estado.textContent='Download solicitado. Confira se o arquivo foi salvo antes de fechar. O TXT não tem criptografia.'};
+document.getElementById('abrir').onclick=()=>file.click();
+file.onchange=async()=>{const f=file.files[0];if(!f)return;try{if(f.size>1048576)throw Error('O limite é de 1 MB.');const t=await f.text();if(area.value&&!confirm('Substituir o texto atual?'))return;area.value=t;alterado=true;atualizar();estado.textContent='Texto aberto localmente. Nenhum arquivo foi enviado ao servidor.'}catch(e){estado.textContent=e.message}finally{file.value=''}};
+document.getElementById('limpar').onclick=()=>{if(area.value&&!confirm('Limpar o texto?'))return;area.value='';alterado=false;atualizar();estado.textContent='Editor limpo. Os arquivos baixados continuam no aparelho.'};
+window.addEventListener('beforeunload',e=>{if(alterado&&area.value){e.preventDefault();e.returnValue=''}});
+</script></body></html>
