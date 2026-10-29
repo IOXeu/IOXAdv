@@ -17,10 +17,11 @@ ul.lista strong{display:block;font-size:18px}ul.lista small{display:block;color:
 #stt.erro{color:#ff9c9c}#stt.neutro{color:#adb8ca}#stt.espera{color:#ffdb91}
 .sublinha{font-size:15px;color:#c7d0de;margin:6px 0 0;min-height:24px}
 ol.cand{margin:4px 0;padding-left:22px;color:#ffdb91;font-size:16px}
-.ouvindo{border-color:#9fe0b0;box-shadow:0 0 0 3px #9fe0b055}
 details{border:1px solid #ffffff26;border-radius:10px;padding:10px 14px;margin-top:12px;background:#ffffff08}
 summary{cursor:pointer;font-weight:700}
 footer{margin-top:30px;font-size:15px;color:#d2d8e4;border-top:1px solid #ffffff26;padding-top:14px}
+.selo{display:inline-block;padding:4px 12px;border-radius:999px;font-size:14px;font-weight:700;background:#ffffff22}
+.selo.on{background:#9fe0b0;color:#101b32}.selo.off{background:#ff9c9c;color:#101b32}.selo.espera{background:#ffdb91;color:#101b32}
 @media print{body{background:#fff;color:#000}header,footer,.voz,.acoes,#lista,.aviso,#stt,.sublinha,details{display:none}textarea{border:0;color:#000}}
 </style></head><body><main>
 <h1>IOXAdv · ADV</h1>
@@ -32,7 +33,7 @@ footer{margin-top:30px;font-size:15px;color:#d2d8e4;border-top:1px solid #ffffff
 <label for="titulo">Nome</label>
 <input id="titulo" type="text" maxlength="80" placeholder="Petição de cobrança">
 <label for="texto">Texto</label>
-<textarea id="texto" lang="pt-BR" spellcheck="true" placeholder="Fale Vox, escrever petição e comece a ditar…"></textarea>
+<textarea id="texto" lang="pt-BR" spellcheck="true" placeholder="Diga Vox, escrever petição e comece a ditar…"></textarea>
 <p id="contador" class="sublinha">0 palavras · 0 caracteres</p>
 <div class="acoes">
 <button id="salvar" type="button">Salvar</button>
@@ -52,11 +53,11 @@ footer{margin-top:30px;font-size:15px;color:#d2d8e4;border-top:1px solid #ffffff
 <section aria-labelledby="t3">
 <h2 id="t3">Vox</h2>
 <div class="voz">
-<div class="acoes"><button id="escuta" type="button">Começar a escutar</button></div>
-<p id="stt" role="status" aria-live="assertive">PARADO</p>
+<div class="acoes"><span id="mic" class="selo espera">MIC …</span></div>
+<p id="stt" role="status" aria-live="assertive">ABRINDO MICROFONE…</p>
 <p id="ultima" class="sublinha">ÚLTIMA FRASE GRAVADA: —</p>
 <ol class="cand" id="candidatos"></ol>
-<p class="sublinha">Para escrever: <b>petição</b>, <b>abrir petição</b>, <b>começar petição</b> ou <b>Vox, escrever petição</b>. Ordens começam com <b>Vox</b>: salvar, ler, apagar, desfazer, corrigir, parar, fim.</p>
+<p class="sublinha">Para escrever, basta dizer <b>Vox, escrever</b> — não há botão. Ordens começam com <b>Vox</b>: salvar, ler, apagar, desfazer, corrigir, parar, fim.</p>
 <details>
 <summary>Leitura em voz alta · diagnóstico</summary>
 <p class="sublinha" id="diagVoz">Verificando vozes…</p>
@@ -65,7 +66,7 @@ footer{margin-top:30px;font-size:15px;color:#d2d8e4;border-top:1px solid #ffffff
 <button id="testeVoz" type="button">Testar voz</button>
 <button id="pararVoz" type="button">Parar leitura</button>
 </div>
-<p class="sublinha">No Chrome a primeira leitura exige toque na página, e textos longos são lidos em pedaços curtos porque o Chrome corta a fala por volta de 15 segundos.</p>
+<p class="sublinha">A leitura usa o sintetizador do sistema e disputa o áudio com o microfone: ao ler, a escuta é pausada de propósito.</p>
 </details>
 </div>
 </section>
@@ -76,11 +77,11 @@ footer{margin-top:30px;font-size:15px;color:#d2d8e4;border-top:1px solid #ffffff
 'use strict';
 const CHAVE='ioxadv.rascunhos.v2';
 const $=id=>document.getElementById(id);
-const titulo=$('titulo'),area=$('texto'),lista=$('lista'),vazio=$('listaVazia'),file=$('arquivo'),stt=$('stt'),ultima=$('ultima'),candidatos=$('candidatos');
+const titulo=$('titulo'),area=$('texto'),lista=$('lista'),vazio=$('listaVazia'),file=$('arquivo'),stt=$('stt'),ultima=$('ultima'),candidatos=$('candidatos'),mic=$('mic');
 let idAtual=null, alterado=false, estado='PARADO', pendente=null, prazo=null, ultimoApagado=null, inaudiveis=0;
 
 const VOX_ACOES={
-  escrever:['escrever','escreve','comecar','comeca','comecar a escrever'],
+  escrever:['escrever','escreve','comecar','comeca','comecar a escrever','ditar','dita'],
   corrigir:['corrigir','corrige','correcao'],
   ler:['ler','leia','le'],
   parar:['parar','pare','para'],
@@ -142,6 +143,7 @@ function parse(frase){
 }
 function vib(x){try{if(navigator.vibrate)navigator.vibrate(x)}catch(e){}}
 function diz(t,c){stt.textContent=t;stt.className=c||''}
+function seloMic(){mic.textContent=escutando?'MIC LIGADO':'MIC PARADO';mic.className='selo '+(escutando?'on':'off')}
 function ok(){diz('SIM SR.');vib([60])}
 function erro(msg,lista){diz(msg,'erro');vib([120,80,120]);candidatos.textContent='';(lista||[]).forEach(t=>{const li=document.createElement('li');li.textContent=t;candidatos.append(li)})}
 function erroOrdem(a){erro('ERRO NA ORDEM ['+(a||'?')+'] — REPITA A ORDEM')}
@@ -167,7 +169,6 @@ if(synth){
 }else{$('diagVoz').textContent='ESTE NAVEGADOR NÃO OFERECE LEITURA EM VOZ ALTA.'}
 $('selVoz').onchange=e=>{vozAtual=vozes.find(v=>v.name===e.target.value)||vozAtual};
 function destravarVoz(){if(!synth)return;try{const u=new SpeechSynthesisUtterance(' ');u.volume=0;u.lang='pt-BR';synth.speak(u);synth.cancel()}catch(e){}}
-document.addEventListener('pointerdown',destravarVoz,{once:true});
 function dividir(texto,max){
   max=max||180;
   const frases=texto.replace(/\s+/g,' ').match(/[^.!?…]+[.!?…]*\s*/g)||[texto];
@@ -182,7 +183,7 @@ function dividir(texto,max){
 }
 function proximoPedaco(){
   if(!falando)return;
-  if(pos>=pedacos.length){falando=false;return}
+  if(pos>=pedacos.length){falando=false;diz('LEITURA CONCLUÍDA');return}
   const u=new SpeechSynthesisUtterance(pedacos[pos++]);
   u.lang='pt-BR';if(vozAtual)u.voice=vozAtual;
   u.onend=()=>setTimeout(proximoPedaco,40);
@@ -194,6 +195,7 @@ function lerEmVoz(){
   if(!synth)return false;
   const t=area.value.trim();if(!t)return false;
   if(!vozes.length)carregarVozes();
+  pausarEscuta();
   synth.cancel();pedacos=dividir(t);pos=0;falando=true;
   setTimeout(proximoPedaco,80);return true;
 }
@@ -233,9 +235,16 @@ function salvar(nome){
  if(!gravarRS(d))return false;
  titulo.value=n;alterado=false;render();return true;
 }
+let ultimaFrase='', ultimoInsertEm=0;
 function inserir(txt){
+ txt=String(txt||'').trim();
  if(!txt)return;
+ const novo=norm(txt),atual=norm(area.value);
+ if(novo===norm(ultimaFrase)&&Date.now()-ultimoInsertEm<15000)return;
+ if(atual&&novo===atual)return;
+ if(ultimaFrase&&Date.now()-ultimoInsertEm<15000&&novo.startsWith(norm(ultimaFrase)))return;
  area.value=area.value?area.value+' '+txt:txt;
+ ultimaFrase=txt;ultimoInsertEm=Date.now();
  alterado=true;contador();
  ultima.textContent='ÚLTIMA FRASE GRAVADA: "'+txt.slice(0,90)+'"';
 }
@@ -263,8 +272,9 @@ function apagarPendente(){
  render();return true;
 }
 function executar(cmd){
+ if(cmd.acao!=='ler')pararLeitura();
  switch(cmd.acao){
-  case 'escrever':{if(cmd.alvo){titulo.value=cmd.alvo;if(!area.value.trim())idAtual=null}estado='ESCREVENDO';diz('ESCREVENDO');vib([40]);return}
+  case 'escrever':{if(cmd.alvo){titulo.value=cmd.alvo;if(!area.value.trim())idAtual=null}estado='ESCREVENDO';diz('ESCREVENDO — DITE A FRASE');vib([40]);return}
   case 'corrigir':{estado='CORRIGINDO';diz('CORRIGINDO');vib([40]);return}
   case 'ler':{
    if(cmd.alvo){const r=resolverAlvo(cmd.alvo);if(r.estado!==1)return erroOrdem('LER '+cmd.alvo.toUpperCase());if(!carregar(r.item.id))return erroOrdem('LER')}
@@ -292,10 +302,9 @@ function executar(cmd){
   case 'imprimir':window.print();ok();return;
   case 'parar':{pararLeitura();if(estado==='ESCREVENDO'||estado==='CORRIGINDO')estado='PARADO';diz('PARADO','neutro');vib([40]);return}
   case 'fim':{
-   pararLeitura();estado='ENCERRADO';
-   if(rec&&escutando){escutando=false;try{rec.stop()}catch(e){}}
-   $('escuta').textContent='Começar a escutar';$('escuta').classList.remove('ouvindo');
-   diz('ENCERRADO — TOQUE PARA VOLTAR','neutro');vib([200]);return;
+   pararLeitura();estado='ENCERRADO';escutando=false;
+   try{if(rec)rec.stop()}catch(e){}
+   seloMic();diz('ENCERRADO — TOQUE NA TELA PARA VOLTAR','neutro');vib([200]);pedirToque();return;
   }
   case 'inaudivel':marcarInaudivel();return;
   case 'troca':{
@@ -327,54 +336,55 @@ function tratar(frase){
  if(p.tipo==='texto'){
   if(estado==='ESCREVENDO'||estado==='CORRIGINDO')return inserir(frase.trim());
   if(estado==='ENCERRADO')return;
-  return diz('AGUARDANDO ORDEM','neutro');
+  return diz('AGUARDANDO «VOX, ESCREVER»','neutro');
  }
  executar(p);
 }
 
 /* ---------- MICROFONE ---------- */
 const Rec=window.SpeechRecognition||window.webkitSpeechRecognition;
-let rec=null,escutando=false,inicioEscuta=0,ultimoAviso=0,reinicios=0;
+let rec=null, escutando=false, processados=0, inicioEscuta=0, ultimoAviso=0, reinicios=0, toqueArmado=false;
 
+function seloMicAtual(){seloMic()}
 function avisoSilencio(){
   const agora=Date.now();
   if(agora-inicioEscuta<3000)return;
-  if(agora-ultimoAviso<8000)return;
+  if(agora-ultimoAviso<10000)return;
   ultimoAviso=agora;
   if(estado==='ESCREVENDO')return;
   diz('NÃO OUVI — REPITA A FRASE','neutro');
 }
-if(!Rec){
- $('escuta').disabled=true;$('escuta').textContent='Ditado indisponível neste navegador';
- diz('VOZ INDISPONÍVEL NESTE NAVEGADOR','erro');
-}else{
- const criar=()=>{
+function pedirToque(){
+  if(toqueArmado)return;
+  toqueArmado=true;
+  const armarToque=()=>{toqueArmado=false;document.removeEventListener('pointerdown',armarToque);estado='PARADO';armar()};
+  document.addEventListener('pointerdown',armarToque);
+  mic.textContent='TOQUE PARA LIGAR O MIC';mic.className='selo espera';
+}
+function reiniciar(){
+  setTimeout(()=>{
+    if(!escutando)return;
+    try{rec.start()}
+    catch(_){setTimeout(()=>{if(escutando){try{rec.start()}catch(__){pedirToque()}}},400)}
+  },0);
+}
+function criar(){
   const r=new Rec();
-  r.lang='pt-BR';r.continuous=true;r.interimResults=true;r.maxAlternatives=3;
-  r.onstart=()=>{
-    inicioEscuta=Date.now();
-    if(escutando)diz(estado==='PARADO'?'ESCUTANDO — DIGA PETIÇÃO OU VOX, …':'ESCUTANDO','neutro');
-  };
-  r.onspeechstart=()=>{if(escutando)diz('OUVINDO…','neutro')};
-  r.onend=()=>{
-    if(!escutando||estado==='ENCERRADO')return;
-    reinicios++;
-    setTimeout(()=>{if(escutando&&estado!=='ENCERRADO'){try{r.start()}catch(e){}}},250);
-  };
+  r.lang='pt-BR';r.continuous=true;r.interimResults=true;r.maxAlternatives=1;
+  r.onstart=()=>{processados=0;inicioEscuta=Date.now()};
+  r.onspeechstart=()=>{if(estado!=='ESCREVENDO')diz('OUVINDO…','neutro')};
+  r.onend=()=>{if(!escutando||estado==='ENCERRADO')return;reinicios++;reiniciar()};
   r.onerror=e=>{
     switch(e.error){
       case 'aborted':return;
       case 'no-speech':return avisoSilencio();
       case 'not-allowed':
       case 'service-not-allowed':
-        escutando=false;$('escuta').textContent='Começar a escutar';
-        return diz('MICROFONE BLOQUEADO — LIBERE A PERMISSÃO','erro');
+        escutando=false;seloMic();return diz('MICROFONE BLOQUEADO — LIBERE A PERMISSÃO','erro');
       case 'audio-capture':
-        escutando=false;$('escuta').textContent='Começar a escutar';
-        return diz('MICROFONE NÃO ENCONTRADO','erro');
+        escutando=false;seloMic();return diz('MICROFONE NÃO ENCONTRADO','erro');
       case 'network':
-        escutando=false;$('escuta').textContent='Começar a escutar';
-        return diz('RECONHECIMENTO SEM CONEXÃO','erro');
+        diz('RECONHECIMENTO SEM CONEXÃO — TENTANDO DE NOVO','erro');return reiniciar();
       default:
         if(estado==='ESCREVENDO')return marcarInaudivel();
         return diz('FALHA NA ESCUTA: '+e.error,'erro');
@@ -382,25 +392,33 @@ if(!Rec){
   };
   r.onresult=e=>{
     for(let i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal)tratar(e.results[i][0].transcript);
+      const res=e.results[i];
+      if(!res.isFinal)continue;
+      if(i<processados)continue;
+      processados=i+1;
+      tratar(res[0].transcript);
     }
   };
   return r;
- };
- $('escuta').onclick=()=>{
-  destravarVoz();
+}
+function armar(){
+  if(!Rec){mic.textContent='SEM DITADO';mic.className='selo off';return diz('VOZ INDISPONÍVEL NESTE NAVEGADOR','erro')}
+  if(escutando)return;
   if(!rec)rec=criar();
-  if(escutando){
-    escutando=false;try{rec.stop()}catch(e){}
-    $('escuta').textContent='Começar a escutar';$('escuta').classList.remove('ouvindo');
-    estado='PARADO';return diz('PARADO','neutro');
-  }
-  try{
-    rec.start();escutando=true;reinicios=0;
-    $('escuta').textContent='Parar de escutar';$('escuta').classList.add('ouvindo');
-    diz('ABRINDO MICROFONE…','neutro');
-  }catch(err){diz('ERRO AO ABRIR O MICROFONE','erro')}
- };
+  escutando=true;
+  try{rec.start()}
+  catch(_){setTimeout(()=>{try{rec.start()}catch(__){escutando=false;seloMic();pedirToque()}},350)}
+  seloMic();
+  diz('ESCUTANDO — DIGA «VOX, ESCREVER»','neutro');
+}
+function pausarEscuta(){if(escutando){escutando=false;try{if(rec)rec.stop()}catch(e){}seloMic()}}
+
+if(Rec){
+  armar();
+  setTimeout(()=>{if(!escutando)pedirToque()},1200);
+}else{
+  mic.textContent='SEM DITADO';mic.className='selo off';
+  diz('VOZ INDISPONÍVEL NESTE NAVEGADOR','erro');
 }
 
 $('testeVoz').onclick=()=>{
@@ -428,5 +446,5 @@ $('baixar').onclick=()=>{
 area.addEventListener('input',()=>{alterado=true;contador()});
 titulo.addEventListener('input',()=>{alterado=true});
 window.addEventListener('beforeunload',e=>{if(alterado&&area.value.trim()){e.preventDefault();e.returnValue=''}});
-contador();render();
+contador();render();seloMic();
 </script></body></html>
