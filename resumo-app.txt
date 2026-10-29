@@ -1,0 +1,211 @@
+======================================================================
+RESUMO DO APP — Gavetas-Advogado-Corrigido001.html
+======================================================================
+Arquivo: 208,138 caracteres | CSS: 18,363 | JS: 188,775
+Textos úteis encontrados: 193
+
+## RÓTULOS EM CAIXA ALTA (botões, seções, selos)
+ - CLIENTE QUE MENTIU
+ - JUIZ QUE NÃO LEU
+ - CONTRATO COM CHEIRO
+ - PRAZO QUE VENCE HOJE
+ - TESTEMUNHA QUE SUMIU
+ - ACORDO QUE NÃO CUMPRIRAM
+ - PETIÇÃO QUE NINGUÉM LÊ
+ - LIMINAR QUE NÃO SAI
+ - CLIENTE QUE SONEGA
+ - IMPOSTO QUE NÃO FECHA
+ - PRAZO SPED QUE VENCE HOJE
+ - LIVRO QUE NINGUÉM LÊ
+ - LIMINAR TRIBUTÁRIA QUE NÃO SAI
+ - GERAÇÃO DOCUMENTO
+ - ENVIAR VIA WHATSAPP
+ - GERAR QR CODE
+ - VERSÕES LIMPAS — SEM SELO — SÓ TABELAS OFICIAIS 2026
+ - LIMPO • SEM SELO RC • SÓ OFICIAL
+ - GAVETAS DO ADVOGADO
+ - VERSÃO LIMPA
+ - GAVETAS DO CONTADOR
+ - FIX 1 - ONBOARDING HUMANIZADO • SEM SELO
+ - TRANSCRIÇÃO CRIPTOGRAFADA • TABELA OFICIAL 2026 ANEXADA
+ - VIDEO 30S • LIMPO
+ - FIX 2 - INTEGRAÇÃO
+ - • LIMPA
+ - SEM SELO
+ - SPED - ECF / EFD
+ - FIX 3 - HASH BLOCKCHAIN • PROVA LIMPA
+ - SHA256 HASH - FONTE OFICIAL
+ - CARIMBO TEMPO OFICIAL
+ - TABELA OFICIAL 2026
+ - GEOLOCALIZAÇÃO + FONTE
+ - PRAZO HOJE
+ - SPED HOJE
+ - NOVO LIMPO
+ - SEM SELO • SÓ TABELA OFICIAL 2026 • FONTE DOU/RFB
+
+## TEXTOS CORRIDOS (descrições, avisos, conteúdo)
+ - object with keys {
+ - ). If you meant to render a collection of children, use an array instead.
+ - ; visit
+ - at new
+ - .Consumer
+ - .Provider
+ - Error generating stack:
+ - compositionend focusout keydown keypress keyup mousedown
+ - compositionstart focusout keydown keypress keyup mousedown
+ - compositionupdate focusout keydown keypress keyup mousedown
+ - cancel close invalid load scroll toggle
+ - Building2
+ - Cofre: Caso 0001234-56 - AES-256 - Zero-knowledge - Tabelas Oficiais 2026
+ - Jurisprudência pública
+ - Agenda prazo no Kanban
+ - Gera 1 página do dia
+ - Lê cofre em voz alta
+ - Imprime com máscara CPF
+ - Salva com hash
+ - Arquiva com trilha LGPD
+ - Abre compartimento estanque
+ - Gravação cliente criptografada
+ - Câmera com hash + geo
+ - Envia petição com link seguro
+ - QR com validade jurídica
+ - ENVIAR PRO PJe
+ - NOVO: envia direto pro PJe/e-SAJ
+ - Consulta tabelas oficiais 2026
+ - Agenda SPED no Kanban
+ - Gera 1 página contábil
+ - Imprime com máscara CNPJ
+ - Abre compartimento fiscal
+ - Foto nota com hash + geo
+ - Envia balanço com link seguro
+ - QR com validade fiscal
+ - ENVIAR PRO e-CAC
+ - NOVO: envia direto pro e-CAC/SPED
+ - Dona Maria, 62 anos, chorando: 'Doutor, ele disse que ia pagar, eu confiei... agora sumiu com meus documentos, tenho medo de perder minha casa...'
+ - Seu João, empresário: 'Contador, essa reforma me confundiu toda, IBS, CBS... não sei quanto vou pagar, tenho medo de errar e ser multado...'
+ - 'Plus Jakarta Sans', system-ui, sans-serif
+ - EC 132/2023 • IBS/CBS/IS • Fonte: Planalto / Receita
+ - Por que citar escritório?
+ - Tabelas são oficiais. Não precisa selo.
+ - CORRIGIDO - Segurança LGPD + Voz +
+ - • Tabelas Oficiais Reforma 2026
+ - - 1 Página por Dia -
+ - Tabelas oficiais Reforma Tributária 2026 - EC 132/2023 - IBS/CBS. Sem selo, sem vínculo com escritório. Metodologia própria 1 Página por Dia. Com onboarding humanizado, integração PJe e hash blockchain de prova.
+ - Por que não citar escritório? Sua questão é válida.
+ - Tabelas da Reforma são
+ - oficiais e públicas
+ - - EC 132/2023, LC 214/2025, Receita Federal. Não precisam de selo de escritório terceiro para ter validade. Versão limpa traz só:
+ - Fonte Oficial: Planalto / DOU / RFB
+ - • Alíquota IBS/CBS, regras transição, tabela 2026. Sem marketing de terceiros. Você vende seu serviço, não o selo alheio.
+ - ✓ Sem selo RC
+ - Primeiros 5 minutos com Dona Maria
+ - Primeiros 5 minutos com Seu João
+ - O cliente não quer artigo. Quer ser ouvido. Grave chorando, transcreva criptografado.
+ - Empresário não quer jargão. Quer entender quanto vai pagar. Grave a dúvida, transcreva e gere explicação oficial.
+ - 1. Toque no microfone
+ - 3. App transcreve e criptografa com AES-256 + tabela oficial 2026
+ - Gravando... Fale OUVIR
+ - OUVINDO...
+ - Ouvindo Dona Maria...
+ - Ouvindo Seu João...
+ - Tabela oficial 2026: IBS
+ - ★ 4,9/5 atendimento humanizado • Sem selo • Só oficial
+ - “Fale OUVIR e grave seu cliente”
+ - Tabelas oficiais 2026 em tela • Sem escritório citado
+ - PJe/e-SAJ
+ - e-CAC/SPED
+ - Enviar pro PJe com 1 clique
+ - Enviar pro e-CAC/SPED com 1 clique
+ - Petição pronta no cofre
+ - Balanço + tabelas 2026 pronto
+ - Petição Inicial - Dona Maria - 10 páginas - Tabelas oficiais 2026
+ - Apuração IBS/CBS - Empresa Seu João - Tabelas oficiais 2026 - 10 páginas
+ - Enviando...
+ - Enviar pro PJe
+ - Enviar pro e-CAC
+ - PJe protocolo
+ - e-CAC protocolo
+ - Fonte oficial:
+ - CNJ PJe
+ - Receita Federal e-CAC
+ - • Sem selo terceiros
+ - Sistemas oficiais • Sem selo
+ - PJe - CNJ
+ - Oficial - Todos tribunais
+ - e-SAJ - TJSP
+ - Oficial - Estadual
+ - Oficial - Juizados
+ - e-CAC - RFB
+ - Oficial - Receita Federal
+ - Oficial - Escrituração
+ - PGDAS / DCTFWeb
+ - Oficial - Simples / Previd.
+ - • Fonte oficial
+ - Petição/balanço com tabela oficial 2026 anexada • Sem citação de escritório
+ - Foto com validade jurídica - hash + carimbo tempo
+ - Gera prova técnica irrefutável. Fonte oficial da prova é o hash, não escritório.
+ - Filmando...
+ - FILMAR prova
+ - Hash oficial + geo • Sem selo
+ - Gerar relatório de autenticidade
+ - Prova técnica • Tabelas oficiais 2026 anexas
+ - a3f5...9c2e - Aguardando FILMAR
+ - • Sem selo escritório
+ - Relatório pronto • Fonte: Tabelas oficiais Reforma Tributária 2026
+ - 4 pilares corrigidos - só oficial - sem selo
+ - RELEVÂNCIA • Tabelas oficiais
+ - Jurisprudência pública + tabelas oficiais 2026. Sem paywall, sem selo escritório.
+ - Fonte oficial - sem citar escritório
+ - EC 132/2023 - Reforma Tributária - Planalto oficial
+ - RFB - Tabelas 2026 transição - e-CAC oficial
+ - PRATICIDADE - 1 página por dia
+ - Dia 1: Fatos
+ - Dia 2: Direito oficial 2026
+ - Dia 3: Provas + Hash
+ - Dia 4: Jurisprudência oficial
+ - Dia 5: Pedido + PJe
+ - Dia 6+: Revisão sem selo
+ - Dia 1: Fatos fiscais
+ - Dia 2: Tabela oficial IBS/CBS
+ - Dia 4: Legislação oficial
+ - Dia 5: Cálculo + e-CAC
+ - VISUALIZAÇÃO - Timeline sem selo
+ - Timeline oficial 2026
+ - Fonte oficial • Sem selo escritório • Só tabela 2026
+ - SEGURANÇA EXTRA - Cofre oficial
+ - AES-256 por caso
+ - Biometria + 2FA
+ - Trilha LGPD
+ - Tabelas oficiais 2026
+ - Mascaramento CPF/CNPJ
+ - Compartimento só você abre
+ - Hash + fonte oficial
+ - Senhas secretas - 12 gavetas -
+ - - Sem selo
+ - Clique • Fonte oficial
+ - Gaveta:
+ - • Fonte oficial 2026
+ - → Estratégia: contradições + prova emprestada + jurisprudência pública. Tabela oficial 2026 anexada: IBS/CBS LC 214/2025. Sem selo escritório, só DOU/RFB.
+ - → Estratégia contador: cruzar NFe com extrato. Tabela oficial 2026: IBS 26,5% CBS 8,8% LC 214/2025. Fonte: Receita. Sem selo, só oficial.
+ - Comandos de voz - fale e execute - sem selo
+ - Mic local, sem nuvem, 100% LGPD. Tabelas oficiais 2026 embutidas.
+ - Cofre limpo - sem selo
+ - + hash + tabelas oficiais
+ - Oficial 2026
+ - Trilha auditoria LGPD - Oficial
+ - Log limpo - sem escritório
+ - - Fonte oficial 2026
+ - Nenhum • Limpo
+ - ✓ Sem selo RC Advocacia / Contabilidade
+ - Fonte oficial: LC 214/2025
+ - Por que citar escritório? Tabelas são públicas e oficiais. Esta versão limpa remove qualquer menção a escritório terceiro e entrega só o que importa: tabela oficial 2026, hash de prova, integração
+ - e cofre LGPD. Você vende seu serviço, não selo alheio.
+
+## ESTADOS (useState)
+  F, O, R, a, e, h, k, l, n, o, s, v, w
+
+## HANDLERS / COMPONENTES
+  Bc, Wc
+
+## O QUE NÃO ESTÁ NO RESUMO
+CSS do Tailwind, React interno, runtime e minificação — sem valor para análise.
