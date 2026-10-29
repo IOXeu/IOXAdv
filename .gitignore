@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Segredos
+.env
+*.key
+*.pem
+
+# Saidas geradas pelo app (nao versionar)
+temp/
+audios/
+videos/
+musicas/
+*.mp3
+*.wav
+*.mp4
+*.srt
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
